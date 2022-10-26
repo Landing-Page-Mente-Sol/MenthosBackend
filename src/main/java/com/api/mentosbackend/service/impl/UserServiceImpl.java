@@ -31,4 +31,9 @@ public class UserServiceImpl extends CrudServiceImpl<User, Long> implements IUse
     public List<User> findTop100ByOrderByPointsDesc() throws Exception {
         return this.userRepository.findTop100ByOrderByPointsDesc();
     }
+
+    @Override
+    public List<User> findUsersByUserType(String userType) throws Exception {
+        return this.userRepository.findUsersByUserType(userType);
+    }
 }

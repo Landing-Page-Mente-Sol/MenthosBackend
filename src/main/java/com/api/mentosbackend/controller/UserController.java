@@ -128,4 +128,22 @@ public class UserController extends CrudController<User, Long> {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(value = "search/user/type/{userType}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Search Users.", notes = "Method for search users by user type.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
+            @ApiResponse(code = 204, message = "Users" + TextDocumentation.HAVE_NOT_CONTENT),
+            @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
+    })
+    public ResponseEntity<List<User>> findUsersByUserType(@PathVariable("userType")String userType){
+        try{
+            List<User> users = this.userService.findUsersByUserType(userType);
+            if(users.size() > 0)
+                return new ResponseEntity<>(users, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception ignored){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

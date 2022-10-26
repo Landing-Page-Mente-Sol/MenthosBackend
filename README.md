@@ -3,6 +3,6 @@ Backend API for Menthos project
 
 ## How work
 
-Para un correcto funcionamiento tiene que existir una base de datos con nombre MenthosDB.   
-Este valor se puede modificar dentro de application.properties.   
-Allí debe de modificar los valores de username y password a los de su cuenta en Postgresql localmente.
+For a correct operation there must be a database named MenthosDB.  
+This value can be modified inside application.properties.  
+There you must modify the username and password values to those of your Postgresql account locally.

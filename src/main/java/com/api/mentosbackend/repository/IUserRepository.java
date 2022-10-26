@@ -10,4 +10,5 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     List<User> findUsersByCycle(int cycle);
     List<User> findUsersByPointsGreaterThanEqual(Long points);
     List<User> findTop100ByOrderByPointsDesc();
+    List<User> findUsersByUserType(String userType);
 }
