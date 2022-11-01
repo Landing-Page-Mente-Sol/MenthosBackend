@@ -36,7 +36,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
         this.setAccountId = new SetId<>();
     }
 
-    @GetMapping(value = {"", "search/all"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"", "/search/all"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Account List.", notes = "Method for list all accounts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Accounts" + TextDocumentation.FOUNDS),
@@ -100,7 +100,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
         }
     }
 
-    @GetMapping(value = "search/username/password/{username}/{password}")
+    @GetMapping(value = "/search/username/password/{username}/{password}")
     @ApiOperation(value = "Search a account by username and password", notes = "Method for search a account by username and password.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Account" + TextDocumentation.FOUND),
@@ -119,7 +119,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
         }
     }
 
-    @GetMapping(value = {"search/user/{userId}", "search/user/id/{userId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/search/user/{userId}", "/search/user/id/{userId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search a account by user id", notes = "Method for search a account by user.")
     @ApiResponses({
             @ApiResponse(code = 404, message = "User or Account" + TextDocumentation.NOT_FOUND),

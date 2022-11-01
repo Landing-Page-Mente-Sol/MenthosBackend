@@ -30,7 +30,7 @@ public class UserController extends CrudController<User, Long> {
         this.setUserId = new SetId<>();
     }
 
-    @GetMapping(value = {"", "search/all"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"", "/search/all"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Users List.", notes = "Method for list all users")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
@@ -40,7 +40,7 @@ public class UserController extends CrudController<User, Long> {
     })
     public ResponseEntity<List<User>> findAllUsers() { return this.getAll(); }
 
-    @GetMapping(value = {"/{id}", "search/user/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/{id}", "/search/user/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search User.", notes = "Method for search a user by id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User" + TextDocumentation.FOUND),
@@ -75,7 +75,7 @@ public class UserController extends CrudController<User, Long> {
     })
     public ResponseEntity<User> deleteUser(@PathVariable("id")Long id){ return this.delete(id); }
 
-    @GetMapping(value = "search/users/cycle/{cycle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/users/cycle/{cycle}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Users.", notes = "Method for search users by cycle.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
@@ -111,7 +111,7 @@ public class UserController extends CrudController<User, Long> {
         }
     }
 
-    @GetMapping(value = "search/user/points/top/100", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/user/points/top/100", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "List Users.", notes = "List top 100 users according to their points.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
@@ -129,7 +129,7 @@ public class UserController extends CrudController<User, Long> {
         }
     }
 
-    @GetMapping(value = "search/user/type/{userType}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/user/type/{userType}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Users.", notes = "Method for search users by user type.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),

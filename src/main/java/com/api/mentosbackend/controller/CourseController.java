@@ -25,7 +25,7 @@ public class CourseController extends CrudController<Course, Long> {
 
     public CourseController(ICourseService courseService) { super(courseService); this.setCourseId = new SetId<>(); }
 
-    @GetMapping(value = {"", "search/all"},produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"", "/search/all"},produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Course List.", notes = "Method for list all courses.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Course" + TextDocumentation.FOUNDS),
@@ -35,7 +35,7 @@ public class CourseController extends CrudController<Course, Long> {
     })
     public ResponseEntity<List<Course>> findAllCourses(){ return this.getAll(); }
 
-    @GetMapping(value = {"/{id}", "search/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/{id}", "/search/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Course.", notes = "Method for search a course by id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Course" + TextDocumentation.FOUND),

@@ -48,7 +48,7 @@ public class QuestionController extends CrudController<Question, Long> {
     })
     public ResponseEntity<List<Question>> findAllQuestions(){ return this.getAll(); }
 
-    @GetMapping(value = {"/{id}", "search/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/{id}", "/search/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Question.", notes = "Method for search a question by id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Question" + TextDocumentation.FOUND),
@@ -101,7 +101,7 @@ public class QuestionController extends CrudController<Question, Long> {
     })
     public ResponseEntity<Question> deleteQuestion(@PathVariable("id") Long id){ return this.delete(id); }
 
-    @GetMapping(value = {"search/course/{id}", "search/course/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/search/course/{id}", "/search/course/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Questions.", notes = "Method for search questions by course (id).")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Questions" + TextDocumentation.FOUNDS),
@@ -123,7 +123,7 @@ public class QuestionController extends CrudController<Question, Long> {
         }
     }
 
-    @GetMapping(value = "search/title/keyword/{keyword}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/title/keyword/{keyword}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Questions.", notes = "Method for search questions by title keyword")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Questions" + TextDocumentation.FOUNDS),
@@ -141,7 +141,7 @@ public class QuestionController extends CrudController<Question, Long> {
         }
     }
 
-    @GetMapping(value = {"search/user/{userId}", "search/user/id/{userId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/search/user/{userId}", "/search/user/id/{userId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Questions.", notes = "Method for search questions by user (id)")
     @ApiResponses({
             @ApiResponse(code = 404, message = "User" + TextDocumentation.NOT_FOUND),
@@ -163,7 +163,7 @@ public class QuestionController extends CrudController<Question, Long> {
         }
     }
 
-    @GetMapping(value = "search/course/title/keyword/{courseId}/{keyword}")
+    @GetMapping(value = "/search/course/title/keyword/{courseId}/{keyword}")
     @ApiOperation(value = "Search Questions", notes = "Method for search questions by course (id) and title keyword.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Questions" + TextDocumentation.FOUNDS),

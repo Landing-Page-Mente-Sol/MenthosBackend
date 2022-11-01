@@ -40,7 +40,7 @@ public class AnswerController extends CrudController<Answer, Long> {
         this.setAnswerId = new SetId<>();
     }
 
-    @GetMapping(value = {"", "search/all"},produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"", "/search/all"},produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Answers List.", notes = "Method for list all answers")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Answers" + TextDocumentation.FOUNDS),
@@ -101,7 +101,7 @@ public class AnswerController extends CrudController<Answer, Long> {
     })
     public ResponseEntity<Answer> deleteAnswer(@PathVariable("id") Long id) { return this.delete(id); }
 
-    @GetMapping(value = {"search/user/{id}", "search/user/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/search/user/{id}", "/search/user/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Answers.", notes = "Method for search answers by user (id).")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Answers" + TextDocumentation.FOUNDS),
@@ -123,7 +123,7 @@ public class AnswerController extends CrudController<Answer, Long> {
         }
     }
 
-    @GetMapping(value = {"search/question/{id}", "search/question/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/search/question/{id}", "/search/question/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Answers.", notes = "Method for search answers by question (id)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Answers" + TextDocumentation.FOUNDS),
