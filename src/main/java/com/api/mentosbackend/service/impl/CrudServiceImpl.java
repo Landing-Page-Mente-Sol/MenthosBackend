@@ -18,6 +18,7 @@ public class CrudServiceImpl<Entity, Id> implements CrudService<Entity, Id> {
     public Entity save(Entity entity) throws Exception { return this.repository.save(entity); }
 
     @Override
+    @Transactional
     public void delete(Id id) throws Exception { this.repository.deleteById(id); }
 
     @Override
