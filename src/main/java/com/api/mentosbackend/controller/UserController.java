@@ -93,7 +93,7 @@ public class UserController extends CrudController<User, Long> {
         }
     }
 
-    @GetMapping(value = "search/user/points/gte/{points}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/user/points/gte/{points}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Users.", notes = "Method for search users by points greater than equal to a quantity.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
