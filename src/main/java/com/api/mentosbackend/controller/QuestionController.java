@@ -123,7 +123,7 @@ public class QuestionController extends CrudController<Question, Long> {
         }
     }
 
-    @GetMapping(value = "/search/title/keyword/{keyword}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/title/contains/{keyword}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Questions.", notes = "Method for search questions by title keyword")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Questions" + TextDocumentation.FOUNDS),
@@ -163,7 +163,7 @@ public class QuestionController extends CrudController<Question, Long> {
         }
     }
 
-    @GetMapping(value = "/search/course/title/keyword/{courseId}/{keyword}")
+    @GetMapping(value = "/search/course/{courseId}/title/contains/{keyword}")
     @ApiOperation(value = "Search Questions", notes = "Method for search questions by course (id) and title keyword.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Questions" + TextDocumentation.FOUNDS),

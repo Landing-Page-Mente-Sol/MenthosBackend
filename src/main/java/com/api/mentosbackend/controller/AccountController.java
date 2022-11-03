@@ -100,7 +100,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
         }
     }
 
-    @GetMapping(value = "/search/username/password/{username}/{password}")
+    @GetMapping(value = "/search/username/{username}/password/{password}")
     @ApiOperation(value = "Search a account by username and password", notes = "Method for search a account by username and password.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Account" + TextDocumentation.FOUND),

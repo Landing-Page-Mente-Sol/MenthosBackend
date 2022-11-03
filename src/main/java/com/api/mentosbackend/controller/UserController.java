@@ -93,7 +93,7 @@ public class UserController extends CrudController<User, Long> {
         }
     }
 
-    @GetMapping(value = "search/user/points/gte/{points}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/user/points/gte/{points}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Users.", notes = "Method for search users by points greater than equal to a quantity.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
@@ -111,14 +111,14 @@ public class UserController extends CrudController<User, Long> {
         }
     }
 
-    @GetMapping(value = "/search/user/points/top/100", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/user/points/top/100/desc", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "List Users.", notes = "List top 100 users according to their points.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
             @ApiResponse(code = 204, message = "Users" + TextDocumentation.HAVE_NOT_CONTENT),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
     })
-    public ResponseEntity<List<User>> findTop100ByOrderByPoints(){
+    public ResponseEntity<List<User>> findTop100ByOrderByPointsDesc(){
         try {
             List<User> users = this.userService.findTop100ByOrderByPointsDesc();
             if(users.size() > 0)
