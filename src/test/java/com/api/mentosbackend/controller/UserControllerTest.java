@@ -32,7 +32,7 @@ public class UserControllerTest {
     @MockBean
     private UserServiceImpl userService;
 
-    private List<User> users = UserGenerator.users();
+    private List<User> users;
 
     private final String basePath = "/api/v1/users";
 
@@ -78,7 +78,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void deleteUser() throws Exception {
+    void deleteUserTest() throws Exception {
         Long id = 1L;
         User user = UserGenerator.user(id);
 
@@ -111,4 +111,22 @@ public class UserControllerTest {
 
     }
 
+    @Test
+    void findTop100ByOrderByPointsDescTest() throws Exception {
+        given(userService.findTop100ByOrderByPointsDesc()).willReturn(users);
+
+        mockMvc.perform(get(this.basePath + "/search/user/points/top/100/desc"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void findUsersByUserTypeTest() throws Exception {
+        String type = "tutor";
+        users.forEach(user -> user.setUserType(type));
+
+        given(userService.findUsersByUserType(type)).willReturn(users);
+
+        mockMvc.perform(get(this.basePath + "/search/user/type/{userType}", type))
+                .andExpect(status().isOk());
+    }
 }
