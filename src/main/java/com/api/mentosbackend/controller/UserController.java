@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/users")
@@ -143,6 +145,25 @@ public class UserController extends CrudController<User, Long> {
                 return new ResponseEntity<>(users, HttpStatus.OK);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ignored){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/search/user/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Search Users.", notes = "Method for search users by email.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User" + TextDocumentation.FOUNDS),
+            @ApiResponse(code = 204, message = "User" + TextDocumentation.HAVE_NOT_CONTENT),
+            @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
+    })
+    public ResponseEntity<User> findUserByEmail(@PathVariable("email") String email){
+        try {
+            Optional<User> user = this.userService.findUserByEmail(email);
+            if(user.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        } catch (Exception ignored) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
