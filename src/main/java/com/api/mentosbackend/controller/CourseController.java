@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/courses")
 @Api(tags = "Courses", value = "Web Service RESTful of courses")
