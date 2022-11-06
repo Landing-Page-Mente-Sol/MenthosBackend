@@ -86,7 +86,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
     @ApiOperation(value = "Search account by username", notes = "Method for search a account by username")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Account" + TextDocumentation.FOUND),
-            @ApiResponse(code = 404, message = "Account" + TextDocumentation.NOT_FOUND),
+            @ApiResponse(code = 204, message = "Account" + TextDocumentation.HAVE_NOT_CONTENT),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
     })
     public ResponseEntity<Account> findAccountByUsername(@PathVariable("username")String username){
@@ -94,7 +94,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
             Account account = this.accountService.findAccountByUsername(username);
             if(account != null)
                 return new ResponseEntity<>(account, HttpStatus.OK);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ignored){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -104,7 +104,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
     @ApiOperation(value = "Search a account by username and password", notes = "Method for search a account by username and password.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Account" + TextDocumentation.FOUND),
-            @ApiResponse(code = 404, message = "Account" + TextDocumentation.NOT_FOUND),
+            @ApiResponse(code = 204, message = "Account" + TextDocumentation.HAVE_NOT_CONTENT),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
     })
     public ResponseEntity<Account> findAccountByUsernameAndPassword(@PathVariable("username")String username, @PathVariable("password")String password){
@@ -113,7 +113,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
             if(account != null)
                 return new ResponseEntity<>(account, HttpStatus.OK);
 
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ignored){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -122,7 +122,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
     @GetMapping(value = {"/search/user/{userId}", "/search/user/id/{userId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search a account by user id", notes = "Method for search a account by user.")
     @ApiResponses({
-            @ApiResponse(code = 404, message = "User or Account" + TextDocumentation.NOT_FOUND),
+            @ApiResponse(code = 204, message = "User or Account" + TextDocumentation.HAVE_NOT_CONTENT),
             @ApiResponse(code = 200, message = "Account" + TextDocumentation.FOUND),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
     })
@@ -135,7 +135,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
             if(account != null)
                 return new ResponseEntity<>(account, HttpStatus.OK);
 
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ignored){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
