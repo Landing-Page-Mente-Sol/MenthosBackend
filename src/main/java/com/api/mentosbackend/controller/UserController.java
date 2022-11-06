@@ -42,7 +42,7 @@ public class UserController extends CrudController<User, Long> {
     })
     public ResponseEntity<List<User>> findAllUsers() { return this.getAll(); }
 
-    @GetMapping(value = {"/{id}", "/search/user/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/{id}", "/search/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search User.", notes = "Method for search a user by id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User" + TextDocumentation.FOUND),
