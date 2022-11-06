@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl extends CrudServiceImpl<User, Long> implements IUserService {
@@ -35,5 +37,10 @@ public class UserServiceImpl extends CrudServiceImpl<User, Long> implements IUse
     @Override
     public List<User> findUsersByUserType(String userType) throws Exception {
         return this.userRepository.findUsersByUserType(userType);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) throws Exception {
+        return this.userRepository.findUserByEmail(email);
     }
 }

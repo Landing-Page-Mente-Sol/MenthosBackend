@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/users")
 @Api(tags = "Users", value = "Web Service RESTful of users")
@@ -40,7 +42,7 @@ public class UserController extends CrudController<User, Long> {
     })
     public ResponseEntity<List<User>> findAllUsers() { return this.getAll(); }
 
-    @GetMapping(value = {"/{id}", "/search/user/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/{id}", "/search/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search User.", notes = "Method for search a user by id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User" + TextDocumentation.FOUND),
@@ -75,7 +77,7 @@ public class UserController extends CrudController<User, Long> {
     })
     public ResponseEntity<User> deleteUser(@PathVariable("id")Long id){ return this.delete(id); }
 
-    @GetMapping(value = "/search/users/cycle/{cycle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/cycle/{cycle}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Users.", notes = "Method for search users by cycle.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
@@ -93,7 +95,7 @@ public class UserController extends CrudController<User, Long> {
         }
     }
 
-    @GetMapping(value = "/search/user/points/gte/{points}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/points/gte/{points}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Users.", notes = "Method for search users by points greater than equal to a quantity.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
@@ -111,7 +113,7 @@ public class UserController extends CrudController<User, Long> {
         }
     }
 
-    @GetMapping(value = "/search/user/points/top/100/desc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/points/top/100/desc", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "List Users.", notes = "List top 100 users according to their points.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
@@ -129,7 +131,7 @@ public class UserController extends CrudController<User, Long> {
         }
     }
 
-    @GetMapping(value = "/search/user/type/{userType}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/type/{userType}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Search Users.", notes = "Method for search users by user type.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Users" + TextDocumentation.FOUNDS),
@@ -143,6 +145,25 @@ public class UserController extends CrudController<User, Long> {
                 return new ResponseEntity<>(users, HttpStatus.OK);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ignored){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/search/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Search Users.", notes = "Method for search users by email.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User" + TextDocumentation.FOUNDS),
+            @ApiResponse(code = 204, message = "User" + TextDocumentation.HAVE_NOT_CONTENT),
+            @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
+    })
+    public ResponseEntity<User> findUserByEmail(@PathVariable("email") String email){
+        try {
+            Optional<User> user = this.userService.findUserByEmail(email);
+            if(user.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        } catch (Exception ignored) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
