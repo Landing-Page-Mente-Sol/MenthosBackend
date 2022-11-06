@@ -95,7 +95,7 @@ public class UserControllerTest {
 
         given(userService.findUsersByCycle(cycle)).willReturn(users);
 
-        mockMvc.perform(get(this.basePath + "/search/users/cycle/{cycle}", cycle))
+        mockMvc.perform(get(this.basePath + "/search/cycle/{cycle}", cycle))
                 .andExpect(status().isOk());
     }
 
@@ -106,7 +106,7 @@ public class UserControllerTest {
 
         given(userService.findUsersByPointsGreaterThanEqual(points)).willReturn(users);
 
-        mockMvc.perform(get(this.basePath + "/search/user/points/gte/{points}", points))
+        mockMvc.perform(get(this.basePath + "/search/points/gte/{points}", points))
                 .andExpect(status().isOk());
 
     }
@@ -115,7 +115,7 @@ public class UserControllerTest {
     void findTop100ByOrderByPointsDescTest() throws Exception {
         given(userService.findTop100ByOrderByPointsDesc()).willReturn(users);
 
-        mockMvc.perform(get(this.basePath + "/search/user/points/top/100/desc"))
+        mockMvc.perform(get(this.basePath + "/search/points/top/100/desc"))
                 .andExpect(status().isOk());
     }
 
@@ -126,7 +126,20 @@ public class UserControllerTest {
 
         given(userService.findUsersByUserType(type)).willReturn(users);
 
-        mockMvc.perform(get(this.basePath + "/search/user/type/{userType}", type))
+        mockMvc.perform(get(this.basePath + "/search/type/{userType}", type))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void findUserByEmailTest() throws Exception {
+        String email = "example@email.com";
+        User user = UserGenerator.user();
+
+        user.setEmail(email);
+
+        given(userService.findUserByEmail(email)).willReturn(Optional.of(user));
+
+        mockMvc.perform(get(this.basePath + "/search/email/{email}", email))
                 .andExpect(status().isOk());
     }
 }

@@ -123,4 +123,20 @@ public class UserServiceImplTest {
 
         assertEquals(usersExpected, users);
     }
+
+    @Test
+    public void findUserByEmailTest() throws Exception {
+        String email = "example@email.com";
+
+        User user = UserGenerator.user();
+        user.setEmail(email);
+
+        given(userRepository.findUserByEmail(email)).willReturn(Optional.of(user));
+
+        Optional<User> userExpected = userService.findUserByEmail(email);
+
+        assertThat(userExpected).isNotNull();
+
+        assertEquals(userExpected, Optional.of(user));
+    }
 }

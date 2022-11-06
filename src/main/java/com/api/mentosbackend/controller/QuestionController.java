@@ -74,7 +74,7 @@ public class QuestionController extends CrudController<Question, Long> {
                 question.setCourse(course.get());
                 question.setUser(user.get());
                 this.questionService.save(question);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.CREATED);
             }
 
             return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);

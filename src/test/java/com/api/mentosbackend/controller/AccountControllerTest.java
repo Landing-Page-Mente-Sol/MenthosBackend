@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -79,9 +78,7 @@ public class AccountControllerTest {
         Long id = 1L;
         Account account = AccountGenerator.account(id);
 
-        User user = UserGenerator.user();
 
-        given(userService.getById(id)).willReturn(Optional.of(user));
         given(accountService.getById(id)).willReturn(Optional.of(account));
 
         mockMvc.perform(put(this.basePath + "/{id}", id)
@@ -98,10 +95,7 @@ public class AccountControllerTest {
 
         given(accountService.getById(id)).willReturn(Optional.of(account));
 
-        mockMvc.perform(delete(this.basePath + "/{id}", id)
-                        .content(UtilFunctions.objectAsJson(account))
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_VALUE))
+        mockMvc.perform(delete(this.basePath + "/{id}", id))
                 .andExpect(status().isOk());
     }
 
