@@ -2,10 +2,9 @@ package com.api.mentosbackend.service.impl;
 
 import com.api.mentosbackend.entities.Answer;
 import com.api.mentosbackend.entities.Question;
-import com.api.mentosbackend.entities.User;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.repository.IAnswerRepository;
 import com.api.mentosbackend.service.IAnswerService;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +21,8 @@ public class AnswerServiceImpl extends CrudServiceImpl<Answer, Long> implements 
     }
 
     @Override
-    public List<Answer> findAnswersByUser(User user) throws Exception {
-        return this.answerRepository.findAnswersByUser(user);
+    public List<Answer> findAnswersByCustomer(Customer customer) throws Exception {
+        return this.answerRepository.findAnswersByCustomer(customer);
     }
 
     @Override

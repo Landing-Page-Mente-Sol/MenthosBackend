@@ -1,9 +1,9 @@
 package com.api.mentosbackend.util;
 
 import com.api.mentosbackend.entities.Account;
-import com.api.mentosbackend.entities.User;
+import com.api.mentosbackend.entities.Customer;
 
-public class AssignAccount implements SetValue<Account, User> {
+public class AssignAccount implements SetValue<Account, Customer> {
     @Override
-    public void call(Account account, User user) { account.setUser(user); }
+    public void call(Account account, Customer customer) { account.setCustomer(customer); }
 }

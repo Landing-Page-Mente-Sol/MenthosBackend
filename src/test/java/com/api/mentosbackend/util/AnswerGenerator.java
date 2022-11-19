@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.List;
 
 import static com.api.mentosbackend.util.QuestionGenerator.question;
-import static com.api.mentosbackend.util.UserGenerator.user;
+import static com.api.mentosbackend.util.CustomerGenerator.customer;
 
 public class AnswerGenerator {
 
-    public static Answer answer(Long answerId, Long userId, Long questionId){
-        return new Answer(answerId, "Answer description", new Date(), user(userId), question(questionId));
+    public static Answer answer(Long answerId, Long customerId, Long questionId){
+        return new Answer(answerId, "Answer description", new Date(), customer(customerId), question(questionId));
     }
 
     public static Answer answer(Long id) { return answer(id, 1L, 1L); }

@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "customers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements ISetId {
+public class Customer implements ISetId {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +24,7 @@ public class User implements ISetId {
     private String lastname;
 
     @Column(name = "type", length = 11, nullable = false)
-    private String userType;
+    private String customerType;
 
     @Column(name = "email", length = 50, nullable = false)
     private String email;

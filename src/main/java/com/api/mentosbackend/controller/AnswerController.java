@@ -2,11 +2,11 @@ package com.api.mentosbackend.controller;
 
 import com.api.mentosbackend.controller.common.CrudController;
 import com.api.mentosbackend.entities.Answer;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.entities.Question;
-import com.api.mentosbackend.entities.User;
 import com.api.mentosbackend.service.IAnswerService;
 import com.api.mentosbackend.service.IQuestionService;
-import com.api.mentosbackend.service.IUserService;
+import com.api.mentosbackend.service.ICustomerService;
 import com.api.mentosbackend.util.TextDocumentation;
 import com.api.mentosbackend.util.SetId;
 import io.swagger.annotations.Api;
@@ -27,15 +27,15 @@ import java.util.Optional;
 @Api(tags = "Answers", value = "Web Service RESTful of answers")
 public class AnswerController extends CrudController<Answer, Long> {
     private final IAnswerService answerService;
-    private final IUserService userService;
+    private final ICustomerService customerService;
     private final IQuestionService questionService;
 
     private final SetId<Answer> setAnswerId;
 
-    public AnswerController(IAnswerService answerService, IQuestionService questionService, IUserService userService) {
+    public AnswerController(IAnswerService answerService, IQuestionService questionService, ICustomerService customerService) {
         super(answerService);
         this.answerService = answerService;
-        this.userService = userService;
+        this.customerService = customerService;
         this.questionService = questionService;
         this.setAnswerId = new SetId<>();
     }
@@ -59,20 +59,20 @@ public class AnswerController extends CrudController<Answer, Long> {
     })
     public ResponseEntity<Answer> findAnswerById(@PathVariable("id") Long id){ return this.getById(id); }
 
-    @PostMapping(value = "/{questionId}/{userId}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{questionId}/{customerId}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Insert Answer.", notes = "Method for insert a answer")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Answer" + TextDocumentation.CREATED),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR),
             @ApiResponse(code = 424, message = TextDocumentation.FAILED_DEPENDENCY)
     })
-    public ResponseEntity<Answer> insertAnswer(@PathVariable("questionId") Long questionId, @PathVariable("userId") Long userId, @Valid @RequestBody Answer answer) {
+    public ResponseEntity<Answer> insertAnswer(@PathVariable("questionId") Long questionId, @PathVariable("customerId") Long customerId, @Valid @RequestBody Answer answer) {
         try {
-            Optional<User> user = this.userService.getById(userId);
+            Optional<Customer> customer = this.customerService.getById(customerId);
             Optional<Question> question = this.questionService.getById(questionId);
-            if(user.isPresent() && question.isPresent()){
+            if(customer.isPresent() && question.isPresent()){
                 answer.setQuestion(question.get());
-                answer.setUser(user.get());
+                answer.setCustomer(customer.get());
                 this.answerService.save(answer);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
@@ -101,20 +101,20 @@ public class AnswerController extends CrudController<Answer, Long> {
     })
     public ResponseEntity<Answer> deleteAnswer(@PathVariable("id") Long id) { return this.delete(id); }
 
-    @GetMapping(value = {"/search/user/{id}", "/search/user/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Search Answers.", notes = "Method for search answers by user (id).")
+    @GetMapping(value = {"/search/customer/{id}", "/search/customer/id/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Search Answers.", notes = "Method for search answers by customer (id).")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Answers" + TextDocumentation.FOUNDS),
-            @ApiResponse(code = 404, message = "User" + TextDocumentation.NOT_FOUND),
+            @ApiResponse(code = 404, message = "Customer" + TextDocumentation.NOT_FOUND),
             @ApiResponse(code = 204, message = "Answers" + TextDocumentation.HAVE_NOT_CONTENT),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
     })
-    public ResponseEntity<List<Answer>> findAnswersByUser(@PathVariable("id") Long userId) {
+    public ResponseEntity<List<Answer>> findAnswersByCustomer(@PathVariable("id") Long customerId) {
         try {
-            Optional<User> user = this.userService.getById(userId);
-            if(user.isEmpty())
+            Optional<Customer> customer = this.customerService.getById(customerId);
+            if(customer.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            List<Answer> answers = this.answerService.findAnswersByUser(user.get());
+            List<Answer> answers = this.answerService.findAnswersByCustomer(customer.get());
             if(answers.size() > 0)
                 return new ResponseEntity<>(answers, HttpStatus.OK);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

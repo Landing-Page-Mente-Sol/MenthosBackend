@@ -1,8 +1,8 @@
 package com.api.mentosbackend.service.impl;
 
 import com.api.mentosbackend.entities.Course;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.entities.Question;
-import com.api.mentosbackend.entities.User;
 import com.api.mentosbackend.repository.IQuestionRepository;
 import com.api.mentosbackend.service.IQuestionService;
 import org.springframework.stereotype.Service;
@@ -32,8 +32,8 @@ public class QuestionServiceImpl extends CrudServiceImpl<Question, Long> impleme
     }
 
     @Override
-    public List<Question> findQuestionsByUser(User user) throws Exception {
-        return this.questionRepository.findQuestionsByUser(user);
+    public List<Question> findQuestionsByCustomer(Customer customer) throws Exception {
+        return this.questionRepository.findQuestionsByCustomer(customer);
     }
 
     @Override

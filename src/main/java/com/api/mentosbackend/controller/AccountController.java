@@ -2,9 +2,9 @@ package com.api.mentosbackend.controller;
 
 import com.api.mentosbackend.controller.common.RelatedCrudController;
 import com.api.mentosbackend.entities.Account;
-import com.api.mentosbackend.entities.User;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.service.IAccountService;
-import com.api.mentosbackend.service.IUserService;
+import com.api.mentosbackend.service.ICustomerService;
 import com.api.mentosbackend.util.AssignAccount;
 import com.api.mentosbackend.util.TextDocumentation;
 import com.api.mentosbackend.util.SetId;
@@ -24,13 +24,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/accounts")
 @Api(tags = "Accounts", value = "Web Service RESTful of accounts")
-public class AccountController extends RelatedCrudController<Account, Long, User, Long> {
+public class AccountController extends RelatedCrudController<Account, Long, Customer, Long> {
     private final IAccountService accountService;
     private final SetId<Account> setAccountId;
     private final AssignAccount assignAccount;
 
-    public AccountController(IAccountService accountService, IUserService userService) {
-        super(accountService, userService);
+    public AccountController(IAccountService accountService, ICustomerService customerService) {
+        super(accountService, customerService);
         this.accountService = accountService;
         this.assignAccount = new AssignAccount();
         this.setAccountId = new SetId<>();
@@ -55,14 +55,14 @@ public class AccountController extends RelatedCrudController<Account, Long, User
     })
     public ResponseEntity<Account> findAccountById(@PathVariable("id")Long id) { return this.getById(id); }
 
-    @PostMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Insert Account.", notes = "Method for insert a account")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Account" + TextDocumentation.CREATED),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR),
             @ApiResponse(code = 424, message = TextDocumentation.FAILED_DEPENDENCY)
     })
-    public ResponseEntity<Account> insertAccount(@PathVariable("userId")Long userId,@Valid @RequestBody Account account){ return this.insert(userId, account, this.assignAccount); }
+    public ResponseEntity<Account> insertAccount(@PathVariable("customerId")Long customerId, @Valid @RequestBody Account account){ return this.insert(customerId, account, this.assignAccount); }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Update Account.", notes = "Method for update a account by id.")
@@ -82,16 +82,16 @@ public class AccountController extends RelatedCrudController<Account, Long, User
     })
     public ResponseEntity<Account> deleteAccount(@PathVariable("id")Long id) { return this.delete(id); }
 
-    @GetMapping(value = "/search/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Search account by username", notes = "Method for search a account by username")
+    @GetMapping(value = "/search/customername/{customername}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Search account by customername", notes = "Method for search a account by customername")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Account" + TextDocumentation.FOUND),
             @ApiResponse(code = 204, message = "Account" + TextDocumentation.HAVE_NOT_CONTENT),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
     })
-    public ResponseEntity<Account> findAccountByUsername(@PathVariable("username")String username){
+    public ResponseEntity<Account> findAccountByUsername(@PathVariable("customername")String customername){
         try {
-            Account account = this.accountService.findAccountByUsername(username);
+            Account account = this.accountService.findAccountByUsername(customername);
             if(account != null)
                 return new ResponseEntity<>(account, HttpStatus.OK);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -100,16 +100,16 @@ public class AccountController extends RelatedCrudController<Account, Long, User
         }
     }
 
-    @GetMapping(value = "/search/username/{username}/password/{password}")
-    @ApiOperation(value = "Search a account by username and password", notes = "Method for search a account by username and password.")
+    @GetMapping(value = "/search/customername/{customername}/password/{password}")
+    @ApiOperation(value = "Search a account by customername and password", notes = "Method for search a account by customername and password.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Account" + TextDocumentation.FOUND),
             @ApiResponse(code = 204, message = "Account" + TextDocumentation.HAVE_NOT_CONTENT),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
     })
-    public ResponseEntity<Account> findAccountByUsernameAndPassword(@PathVariable("username")String username, @PathVariable("password")String password){
+    public ResponseEntity<Account> findAccountByUsernameAndPassword(@PathVariable("customername")String customername, @PathVariable("password")String password){
         try {
-            Account account = this.accountService.findAccountByUsernameAndPassword(username, password);
+            Account account = this.accountService.findAccountByUsernameAndPassword(customername, password);
             if(account != null)
                 return new ResponseEntity<>(account, HttpStatus.OK);
 
@@ -119,19 +119,19 @@ public class AccountController extends RelatedCrudController<Account, Long, User
         }
     }
 
-    @GetMapping(value = {"/search/user/{userId}", "/search/user/id/{userId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Search a account by user id", notes = "Method for search a account by user.")
+    @GetMapping(value = {"/search/customer/{customerId}", "/search/customer/id/{customerId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Search a account by customer id", notes = "Method for search a account by customer.")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "User or Account" + TextDocumentation.HAVE_NOT_CONTENT),
+            @ApiResponse(code = 204, message = "Customer or Account" + TextDocumentation.HAVE_NOT_CONTENT),
             @ApiResponse(code = 200, message = "Account" + TextDocumentation.FOUND),
             @ApiResponse(code = 501, message = TextDocumentation.INTERNAL_SERVER_ERROR)
     })
-    public ResponseEntity<Account> findAccountByUser(@PathVariable("userId")Long userId){
+    public ResponseEntity<Account> findAccountByCustomer(@PathVariable("customerId")Long customerId){
         try {
-            Optional<User> user = this.relatedCrudService.getById(userId);
-            if(user.isEmpty())
+            Optional<Customer> customer = this.relatedCrudService.getById(customerId);
+            if(customer.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            Account account = this.accountService.findAccountByUser(user.get());
+            Account account = this.accountService.findAccountByCustomer(customer.get());
             if(account != null)
                 return new ResponseEntity<>(account, HttpStatus.OK);
 

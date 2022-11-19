@@ -25,7 +25,7 @@ public class Account implements ISetId {
     private String password;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private User user;
+    private Customer customer;
 }

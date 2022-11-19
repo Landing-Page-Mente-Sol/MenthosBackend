@@ -5,12 +5,12 @@ import com.api.mentosbackend.entities.Account;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.api.mentosbackend.util.UserGenerator.user;
+import static com.api.mentosbackend.util.CustomerGenerator.customer;
 
 public class AccountGenerator {
 
-    public static Account account(Long accountId, Long userId) {
-        return new Account(accountId, "username", "password", user(userId));
+    public static Account account(Long accountId, Long customerId) {
+        return new Account(accountId, "username", "password", customer(customerId));
     }
 
     public static Account account(Long id) { return account(id, 1L); }

@@ -1,10 +1,10 @@
 package com.api.mentosbackend.service;
 import com.api.mentosbackend.entities.Account;
-import com.api.mentosbackend.entities.User;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.repository.IAccountRepository;
 import com.api.mentosbackend.service.impl.AccountServiceImpl;
 import com.api.mentosbackend.util.AccountGenerator;
-import com.api.mentosbackend.util.UserGenerator;
+import com.api.mentosbackend.util.CustomerGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -102,13 +102,13 @@ public class AccountServiceImplTest {
 
     @Test
     public void findAccountByUserTest() throws Exception {
-        User user = UserGenerator.user();
+        Customer customer = CustomerGenerator.customer();
         Account account = AccountGenerator.account();
-        account.setUser(user);
+        account.setCustomer(customer);
 
-        given(accountRepository.findAccountByUser(user)).willReturn(account);
+        given(accountRepository.findAccountByCustomer(customer)).willReturn(account);
 
-        Account accountExpected = accountService.findAccountByUser(user);
+        Account accountExpected = accountService.findAccountByCustomer(customer);
 
         assertThat(accountExpected).isNotNull();
         assertEquals(accountExpected, account);

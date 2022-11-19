@@ -1,8 +1,8 @@
 package com.api.mentosbackend.service;
 
 import com.api.mentosbackend.entities.Answer;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.entities.Question;
-import com.api.mentosbackend.entities.User;
 import com.api.mentosbackend.repository.IAnswerRepository;
 import com.api.mentosbackend.service.impl.AnswerServiceImpl;
 
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import com.api.mentosbackend.util.AnswerGenerator;
 import com.api.mentosbackend.util.QuestionGenerator;
-import com.api.mentosbackend.util.UserGenerator;
+import com.api.mentosbackend.util.CustomerGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -78,13 +78,13 @@ public class AnswerServiceImplTest {
 
     @Test
     public void findAnswersByUserTest() throws Exception {
-        User user = UserGenerator.user();
+        Customer customer = CustomerGenerator.customer();
         List<Answer> answers = AnswerGenerator.answers();
-        answers.forEach(answer -> answer.setUser(user));
+        answers.forEach(answer -> answer.setCustomer(customer));
 
-        given(answerRepository.findAnswersByUser(user)).willReturn(answers);
+        given(answerRepository.findAnswersByCustomer(customer)).willReturn(answers);
 
-        List<Answer> answersExpected = answerService.findAnswersByUser(user);
+        List<Answer> answersExpected = answerService.findAnswersByCustomer(customer);
 
         assertEquals(answersExpected, answers);
     }

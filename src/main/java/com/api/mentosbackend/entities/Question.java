@@ -29,9 +29,9 @@ public class Question implements ISetId {
     private Date madeAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private User user;
+    private Customer customer;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

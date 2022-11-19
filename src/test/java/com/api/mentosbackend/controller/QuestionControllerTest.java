@@ -1,13 +1,13 @@
 package com.api.mentosbackend.controller;
 import com.api.mentosbackend.entities.Course;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.entities.Question;
-import com.api.mentosbackend.entities.User;
 import com.api.mentosbackend.service.impl.CourseServiceImpl;
 import com.api.mentosbackend.service.impl.QuestionServiceImpl;
-import com.api.mentosbackend.service.impl.UserServiceImpl;
+import com.api.mentosbackend.service.impl.CustomerServiceImpl;
 import com.api.mentosbackend.util.CourseGenerator;
 import com.api.mentosbackend.util.QuestionGenerator;
-import com.api.mentosbackend.util.UserGenerator;
+import com.api.mentosbackend.util.CustomerGenerator;
 import com.api.mentosbackend.util.UtilFunctions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class QuestionControllerTest {
     @MockBean
     private CourseServiceImpl courseService;
     @MockBean
-    private UserServiceImpl userService;
+    private CustomerServiceImpl customerService;
 
     private List<Question> questions;
     private final String basePath = "/api/v1/questions";
@@ -67,20 +67,20 @@ public class QuestionControllerTest {
     @Test
     void insertQuestionTest() throws Exception {
         Long courseId = 1L;
-        Long userId = 1L;
+        Long customerId = 1L;
         Long id = 1L;
 
         Question question = QuestionGenerator.question(id);
         Course course = CourseGenerator.course(courseId);
-        User user = UserGenerator.user(userId);
+        Customer customer = CustomerGenerator.customer(customerId);
 
-        question.setUser(user);
+        question.setCustomer(customer);
         question.setCourse(course);
 
         given(courseService.getById(courseId)).willReturn(Optional.of(course));
-        given(userService.getById(userId)).willReturn(Optional.of(user));
+        given(customerService.getById(customerId)).willReturn(Optional.of(customer));
 
-        mockMvc.perform(post(this.basePath + "/{courseId}/{userId}", courseId, userId)
+        mockMvc.perform(post(this.basePath + "/{courseId}/{customerId}", courseId, customerId)
                         .content(UtilFunctions.objectAsJson(question))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -145,15 +145,15 @@ public class QuestionControllerTest {
 
     @Test
     void findQuestionsByUserTest() throws Exception {
-        Long userId = 1L;
-        User user = UserGenerator.user(userId);
+        Long customerId = 1L;
+        Customer customer = CustomerGenerator.customer(customerId);
 
-        questions.forEach(question -> question.setUser(user));
+        questions.forEach(question -> question.setCustomer(customer));
 
-        given(userService.getById(userId)).willReturn(Optional.of(user));
-        given(questionService.findQuestionsByUser(user)).willReturn(questions);
+        given(customerService.getById(customerId)).willReturn(Optional.of(customer));
+        given(questionService.findQuestionsByCustomer(customer)).willReturn(questions);
 
-        mockMvc.perform(get(this.basePath + "/search/user/{userId}", userId))
+        mockMvc.perform(get(this.basePath + "/search/customer/{customerId}", customerId))
                 .andExpect(status().isOk());
     }
 

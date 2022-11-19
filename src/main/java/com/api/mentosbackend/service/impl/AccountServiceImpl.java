@@ -1,7 +1,7 @@
 package com.api.mentosbackend.service.impl;
 
 import com.api.mentosbackend.entities.Account;
-import com.api.mentosbackend.entities.User;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.repository.IAccountRepository;
 import com.api.mentosbackend.service.IAccountService;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class AccountServiceImpl extends CrudServiceImpl<Account, Long> implement
     }
 
     @Override
-    public Account findAccountByUser(User user) throws Exception {
-        return this.accountRepository.findAccountByUser(user);
+    public Account findAccountByCustomer(Customer customer) throws Exception {
+        return this.accountRepository.findAccountByCustomer(customer);
     }
 }

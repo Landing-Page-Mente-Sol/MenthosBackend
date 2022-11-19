@@ -1,14 +1,14 @@
 package com.api.mentosbackend.controller;
 
 import com.api.mentosbackend.entities.Answer;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.entities.Question;
-import com.api.mentosbackend.entities.User;
 import com.api.mentosbackend.service.impl.AnswerServiceImpl;
 import com.api.mentosbackend.service.impl.QuestionServiceImpl;
-import com.api.mentosbackend.service.impl.UserServiceImpl;
+import com.api.mentosbackend.service.impl.CustomerServiceImpl;
 import com.api.mentosbackend.util.AnswerGenerator;
 import com.api.mentosbackend.util.QuestionGenerator;
-import com.api.mentosbackend.util.UserGenerator;
+import com.api.mentosbackend.util.CustomerGenerator;
 import com.api.mentosbackend.util.UtilFunctions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class AnswerControllerTest {
     @MockBean
     private AnswerServiceImpl answerService;
     @MockBean
-    private  UserServiceImpl userService;
+    private CustomerServiceImpl customerService;
     @MockBean
     private  QuestionServiceImpl questionService;
 
@@ -70,21 +70,21 @@ public class AnswerControllerTest {
     @Test
     void insertAnswerTest() throws Exception {
         Long questionId = 1L;
-        Long userId = 1L;
+        Long customerId = 1L;
         Long id = 1L;
 
         Question question = QuestionGenerator.question(questionId);
-        User user = UserGenerator.user(userId);
+        Customer customer = CustomerGenerator.customer(customerId);
         Answer answer = AnswerGenerator.answer(id);
 
         answer.setQuestion(question);
-        answer.setUser(user);
+        answer.setCustomer(customer);
 
         given(questionService.getById(questionId)).willReturn(Optional.of(question));
-        given(userService.getById(userId)).willReturn(Optional.of(user));
+        given(customerService.getById(customerId)).willReturn(Optional.of(customer));
         given(answerService.getById(id)).willReturn(Optional.of(answer));
 
-        mockMvc.perform(post(this.basePath + "/{questionId}/{userId}", questionId, userId)
+        mockMvc.perform(post(this.basePath + "/{questionId}/{customerId}", questionId, customerId)
                         .content(UtilFunctions.objectAsJson(answer))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -120,14 +120,14 @@ public class AnswerControllerTest {
 
     @Test
     void findAnswersByUserTest() throws Exception {
-        Long userId = 1L;
-        User user = UserGenerator.user(userId);
-        this.answers.forEach(answer -> answer.setUser(user));
+        Long customerId = 1L;
+        Customer customer = CustomerGenerator.customer(customerId);
+        this.answers.forEach(answer -> answer.setCustomer(customer));
 
-        given(userService.getById(userId)).willReturn(Optional.of(user));
-        given(answerService.findAnswersByUser(user)).willReturn(answers);
+        given(customerService.getById(customerId)).willReturn(Optional.of(customer));
+        given(answerService.findAnswersByCustomer(customer)).willReturn(answers);
 
-        mockMvc.perform(get(this.basePath + "/search/user/{id}", userId))
+        mockMvc.perform(get(this.basePath + "/search/customer/{id}", customerId))
                 .andExpect(status().isOk());
 
     }

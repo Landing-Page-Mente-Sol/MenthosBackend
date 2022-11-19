@@ -1,10 +1,10 @@
 package com.api.mentosbackend.controller;
 import com.api.mentosbackend.entities.Account;
-import com.api.mentosbackend.entities.User;
+import com.api.mentosbackend.entities.Customer;
 import com.api.mentosbackend.service.impl.AccountServiceImpl;
-import com.api.mentosbackend.service.impl.UserServiceImpl;
+import com.api.mentosbackend.service.impl.CustomerServiceImpl;
 import com.api.mentosbackend.util.AccountGenerator;
-import com.api.mentosbackend.util.UserGenerator;
+import com.api.mentosbackend.util.CustomerGenerator;
 import com.api.mentosbackend.util.UtilFunctions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ public class AccountControllerTest {
     @MockBean
     private AccountServiceImpl accountService;
     @MockBean
-    private UserServiceImpl userService;
+    private CustomerServiceImpl customerService;
 
     private List<Account> accounts;
     private final String basePath = "/api/v1/accounts";
@@ -62,11 +62,11 @@ public class AccountControllerTest {
     void insertAccountTest() throws Exception {
         Account account = AccountGenerator.account();
         Long id = 1L;
-        User user = UserGenerator.user(id);
+        Customer customer = CustomerGenerator.customer(id);
 
-        given(userService.getById(id)).willReturn(Optional.of(user));
+        given(customerService.getById(id)).willReturn(Optional.of(customer));
 
-        mockMvc.perform(post(this.basePath + "/{userId}", id)
+        mockMvc.perform(post(this.basePath + "/{customerId}", id)
                         .content(UtilFunctions.objectAsJson(account))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -130,13 +130,13 @@ public class AccountControllerTest {
     @Test
     void findAccountByUserTest() throws Exception {
         Long id = 1L;
-        User user = UserGenerator.user(id);
+        Customer customer = CustomerGenerator.customer(id);
 
         Account account = AccountGenerator.account();
-        given(accountService.findAccountByUser(user)).willReturn(account);
-        given(userService.getById(id)).willReturn(Optional.of(user));
+        given(accountService.findAccountByCustomer(customer)).willReturn(account);
+        given(customerService.getById(id)).willReturn(Optional.of(customer));
 
-        mockMvc.perform(get(this.basePath + "/search/user/{userId}", id))
+        mockMvc.perform(get(this.basePath + "/search/customer/{customerId}", id))
                 .andExpect(status().isOk());
     }
 }
