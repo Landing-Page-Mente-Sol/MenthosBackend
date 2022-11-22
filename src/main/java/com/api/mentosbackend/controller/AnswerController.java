@@ -112,7 +112,7 @@ public class AnswerController extends CrudController<Answer, Long> {
     public ResponseEntity<List<Answer>> findAnswersByUser(@PathVariable("id") Long userId) {
         try {
             Optional<User> user = this.userService.getById(userId);
-            if(user.isEmpty())
+            if(!user.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             List<Answer> answers = this.answerService.findAnswersByUser(user.get());
             if(answers.size() > 0)
@@ -134,7 +134,7 @@ public class AnswerController extends CrudController<Answer, Long> {
     public ResponseEntity<List<Answer>> findAnswersByQuestion(@PathVariable("id")Long questionId){
         try {
             Optional<Question> question = this.questionService.getById(questionId);
-            if (question.isEmpty())
+            if (!question.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             List<Answer> answers = this.answerService.findAnswersByQuestion(question.get());
             if(answers.size() > 0)

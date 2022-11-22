@@ -26,7 +26,7 @@ public class CrudController<Entity, Id> {
     protected ResponseEntity<Entity> getById(Id id) {
         try {
             Optional<Entity> entity = this.simpleCrudService.getById(id);
-            if(entity.isEmpty())
+            if(!entity.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             return new ResponseEntity<>(entity.get(), HttpStatus.OK);
         } catch (Exception ignored){
@@ -44,7 +44,7 @@ public class CrudController<Entity, Id> {
     protected ResponseEntity<Entity> update(Id id, Entity entity, SetValue<Entity, Id> setValue) {
         try {
             Optional<Entity> entityOld = simpleCrudService.getById(id);
-            if(entityOld.isEmpty())
+            if(!entityOld.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             setValue.call(entity, id);
             simpleCrudService.save(entity);
@@ -57,7 +57,7 @@ public class CrudController<Entity, Id> {
     protected ResponseEntity<Entity> delete(Id id) {
         try {
             Optional<Entity> entity = this.simpleCrudService.getById(id);
-            if(entity.isEmpty())
+            if(!entity.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             this.simpleCrudService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
