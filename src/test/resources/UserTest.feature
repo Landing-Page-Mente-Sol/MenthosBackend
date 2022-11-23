@@ -4,7 +4,7 @@ Feature: User Adding
   So that it can be available to application
 
   Background:
-    Given The Endpoint "http://localhost:%d/api/v1/users" is available
+    Given The Endpoint "http://localhost:%d/api/v1/"users is available
 
   @add-user
   Scenario: Add User
