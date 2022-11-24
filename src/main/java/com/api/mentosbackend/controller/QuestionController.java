@@ -113,7 +113,7 @@ public class QuestionController extends CrudController<Question, Long> {
     public ResponseEntity<List<Question>> findQuestionsByCourse(@PathVariable("id")Long courseId) {
         try {
             Optional<Course> course = this.courseService.getById(courseId);
-            if(course.isEmpty())
+            if(!course.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             List<Question> questions = this.questionService.findQuestionsByCourse(course.get());
             if (questions.size() > 0)
@@ -153,7 +153,7 @@ public class QuestionController extends CrudController<Question, Long> {
     public ResponseEntity<List<Question>> findQuestionsByUser(@PathVariable("userId")Long userId){
         try {
             Optional<User> user = this.userService.getById(userId);
-            if(user.isEmpty())
+            if(!user.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             List<Question> questions = this.questionService.findQuestionsByUser(user.get());
             if(questions.size() > 0)

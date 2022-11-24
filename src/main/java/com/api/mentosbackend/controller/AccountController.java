@@ -129,7 +129,7 @@ public class AccountController extends RelatedCrudController<Account, Long, User
     public ResponseEntity<Account> findAccountByUser(@PathVariable("userId")Long userId){
         try {
             Optional<User> user = this.relatedCrudService.getById(userId);
-            if(user.isEmpty())
+            if(!user.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             Account account = this.accountService.findAccountByUser(user.get());
             if(account != null)

@@ -159,7 +159,7 @@ public class UserController extends CrudController<User, Long> {
     public ResponseEntity<User> findUserByEmail(@PathVariable("email") String email){
         try {
             Optional<User> user = this.userService.findUserByEmail(email);
-            if(user.isEmpty())
+            if(!user.isPresent())
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
